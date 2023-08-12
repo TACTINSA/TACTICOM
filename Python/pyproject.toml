@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/tacticom/__about__.py"
+
+[project]
+name = "tacticom"
+description = "TACTINSA Serial Communication Protocol"
+readme = "README.md"
+license = "Apache-2.0"
+authors = [
+    { name = "DenisD3D" },
+    { name = "TACTINSA" }
+]
+keywords = ["tactinsa", "tacticom", "serial", "communication", "protocol"]
+requires-python = ">=3"
+dependencies = ["pyserial"]
+dynamic = ["version"]
+
+
+[project.urls]
+Homepage = "https://github.com/TACTINSA/TACTICOM"
+Documentation = "https://github.com/TACTINSA/TACTICOM"
+"Bug Tracker" = "https://github.com/TACTINSA/TACTICOM/issues"

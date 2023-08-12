@@ -4,11 +4,11 @@
 
 class Tacticom {
 private:
-    void (*router)(const String &, const String *, uint8_t);
     String prefix;
+    void (*commands_handler)(const String &, const String *, uint8_t);
 
 public:
-    Tacticom(void (*router)(const String &name, const String args[], uint8_t args_count), String prefix);
+    Tacticom(const String& prefix, void (*commands_handler)(const String &name, const String args[], uint8_t args_count));
     void tick();
     void send(const String &name);
     void send(const String &name, const String args[], uint8_t args_count);
