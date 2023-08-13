@@ -1,8 +1,8 @@
-from typing import Callable
+from typing import Callable, Any
 
 
 class TactiCom:
-    def __init__(self, prefix: str, port: str, baudrate: int, commands_handler: Callable[[str, list], None], reader_sleep_time: float = 0.1):
+    def __init__(self, prefix: str, port: str, baudrate: int, commands_handler: Callable[[str, list], Any], reader_sleep_time: float = 0.1):
         self.prefix = prefix + "+"
         self.commands_handler = commands_handler
 
