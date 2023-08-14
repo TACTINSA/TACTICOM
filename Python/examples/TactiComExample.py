@@ -9,8 +9,10 @@ def commands_handler(command: str, arguments: list):
             print("Received pong")
         case "add_result":
             print("Received add_result with args: " + str(arguments))
+            print("Result: " + arguments[0])
         case "divide_result":
             print("Received divide_result with args: " + str(arguments))
+            print("Result q: " + arguments[0] + " r: " + arguments[1])
 
 
 tacticom = TactiCom("R1", "COM4", 115200, commands_handler)

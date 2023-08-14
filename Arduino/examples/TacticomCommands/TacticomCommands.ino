@@ -1,12 +1,11 @@
-#include <Arduino.h>
 #include "tacticom.h"
 
 
-void router(const String &name, const String args[], uint8_t args_count);
+void commands_handler(const String &name, const String args[], uint8_t args_count);
 
-Tacticom tacticom("R1", router); // Command will be "R1+command_name=arg1,arg2,arg3" (eg "R1+ping")
+Tacticom tacticom("R1", commands_handler); // Command will be "R1+command_name=arg1,arg2,arg3" (eg "R1+ping")
 
-void router(const String &name, const String *args, uint8_t args_count) { // declare here all commands
+void commands_handler(const String &name, const String *args, uint8_t args_count) { // Handle here all received commands
     if (name == "ping") {
         tacticom.send("pong"); // reply pong
     } else if (name == "add") {
@@ -30,5 +29,5 @@ void setup() {
 }
 
 void loop() {
-    tacticom.tick();
+    tacticom.tick(); // Periodically check for new received commands
 }
