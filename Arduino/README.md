@@ -14,7 +14,7 @@ lib_deps =
 ```
 
 #### Using Arduino IDE
-Download Arduino folder as ZIP: [Download link](https://minhaskamal.github.io/DownGit/#/home?url=https:%2F%2Fgithub.com%2FTACTINSA%2FTACTICOM%2Ftree%2Fmaster%2FArduino&fileName=tacticom_arduino)
+Download the Arduino library as a ZIP file [HERE](https://minhaskamal.github.io/DownGit/#/home?url=https:%2F%2Fgithub.com%2FTACTINSA%2FTACTICOM%2Ftree%2Fmaster%2FArduino&fileName=tacticom_arduino). \
 In Arduino IDE, under `Sketch` -> `Include Library` -> `Add .ZIP Library...` select the downloaded file. 
 
 ## Usage
