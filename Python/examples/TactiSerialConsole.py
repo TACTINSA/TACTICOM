@@ -1,4 +1,4 @@
-from src.tacticom import TactiSerial
+from tacticom import TactiSerial
 
 
 def on_message(message: str):

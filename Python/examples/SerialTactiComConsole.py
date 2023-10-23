@@ -1,13 +1,13 @@
 import time
 
-from src.tacticom import TactiCom
+from tacticom import SerialTactiCom
 
 
-def commands_handler(command: str, arguments: list):
+def commands_handler(command: str, ask_code: str, arguments: list):
     print("Received command " + command + " with args: " + str(arguments))
 
 
-tacticom = TactiCom("R1", "COM4", 115200, commands_handler)
+tacticom = SerialTactiCom("R1", "COM4", 115200, commands_handler)
 tacticom.open()
 print("Connected to TactiCom device")
 while True:

@@ -36,6 +36,6 @@ def commands_handler(command: str, arguments: list):
 TactiSerial is a threaded serial reader / writer behind TactiCom that can be used when the TactiCom communication protocol isn't required (Eg with a stock motor driver).
 
 ## Examples
-+ [Sample usage of TactiCom](examples/TactiComExample.py)
-+ [Console for playing with TactiCom](examples/TactiComConsole.py)
++ [Sample usage of TactiCom](examples/SerialTactiComExample.py)
++ [Console for playing with TactiCom](examples/SerialTactiComConsole.py)
 + [Console for playing with TactiSerial](examples/TactiSerialConsole.py)
