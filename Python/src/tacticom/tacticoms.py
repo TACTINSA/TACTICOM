@@ -165,4 +165,6 @@ class SubprocessTactiCom(TactiCom):
     def _poll_message(self):
         while True:
             message = self.command_input.readline().strip()
-            self._on_message(message)
+            if message:
+                self._on_message(message)
+
