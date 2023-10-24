@@ -14,12 +14,13 @@ async def main():
     infile = os.fdopen(r2)
 
     tc = SubprocessTactiCom("R1", infile, outfile, CommandRegister())
+    result = await tc.send_request("add", 1, "2")
+    print(result[1][0])
     time.sleep(1)
-    result = await tc.ask_message("add", "1", "2")
-    print(result)
+    print(await tc.send_request("add", 3, 4))
 
+    tc.send_event("quit")
     child.wait()
-
 
 if __name__ == '__main__':
     asyncio.run(main())

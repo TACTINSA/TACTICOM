@@ -1,5 +1,6 @@
 import re
 from dataclasses import dataclass
+from typing import Any
 
 PARSING_REGEX = re.compile(r"(\w+)\+(?:\[([\w-]+)\])?(\w+)(?:\[([\w-]+)\])?(?:=(.+|[^\S\r\n]*)?)?")
 
@@ -10,7 +11,7 @@ class TactiMessage:
     answer_code: str | None
     command: str
     ask_code: str | None
-    arguments: list[str]
+    arguments: list[Any]
 
 
 def parse(message: str) -> TactiMessage:
@@ -40,5 +41,5 @@ def serialize(message: TactiMessage) -> str:
     if message.ask_code is not None:
         message_str += "[" + message.ask_code + "]"
     if message.arguments:
-        message_str += "=" + ",".join(message.arguments)
+        message_str += "=" + ",".join(map(str, message.arguments))
     return message_str

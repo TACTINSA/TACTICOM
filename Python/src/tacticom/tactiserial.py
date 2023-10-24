@@ -6,12 +6,12 @@ import serial
 
 
 class TactiSerial:
-    def __init__(self, port: str, baudrate: int, on_message_callback: Callable[[str], None], use_raw_callback: bool = False, reader_sleep_time: float = 0.1):
+    def __init__(self, port: str, baudrate: int, on_message_callback: Callable[[str], None], use_raw_callback: bool = False, poll_sleep_time: float = 0.1):
         self.port = port
         self.baudrate = baudrate
         self.on_message_callback = on_message_callback
         self.use_raw_callback = use_raw_callback
-        self.reader_sleep_time = reader_sleep_time
+        self.poll_sleep_time = poll_sleep_time
 
         self._serial = serial.Serial(baudrate=self.baudrate)
         self._serial.port = self.port  # Set port after to delay ts open
@@ -32,8 +32,8 @@ class TactiSerial:
 
                 self.on_message_callback(data)
 
-            if self.reader_sleep_time:
-                time.sleep(self.reader_sleep_time)
+            if self.poll_sleep_time:
+                time.sleep(self.poll_sleep_time)
 
     def open(self):
         """Open Serial port connection"""

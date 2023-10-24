@@ -15,10 +15,11 @@ arduino = TactiCom("R1", "/dev/arduino", 115200, commands_handler)
 ```
 with commands_handler being the method handling received commands (see 3.)
 2. Sending commands to Arduino:
+
 ```py
-tacticom.send("ping") # Without arguments
-tacticom.send("add", "1", "2") # With arguments
-tacticom.send("divide", "1", "2") # With arguments
+tacticom._send("ping",,  # Without arguments
+tacticom._send("add", "1", "2")  # With arguments
+tacticom._send("divide", "1", "2")  # With arguments
 ```
 3. Recieving commands
 ```py

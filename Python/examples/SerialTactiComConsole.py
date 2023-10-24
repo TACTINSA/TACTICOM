@@ -22,7 +22,7 @@ while True:
             break
         args.append(arg)
 
-    tacticom.send(command_name, *args)
+    tacticom._send(command_name,,
 
     time.sleep(0.5)  # Wait for device response before prompting for next command
 
