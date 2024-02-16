@@ -47,7 +47,7 @@ To send one of these, use the `send_XXX` method:
 stc.send_event("led", "on")  # an event, with arguments
 await stc.send_request("ping") # a request, without arguments
 stc.send_reply("pong") # a reply, without arguments
-stc.send_request("add", "1", "2")  # a reqyest, with arguments
+stc.send_request("add", "1", "2")  # a request, with arguments
 ```
 
 3. Recieving commands

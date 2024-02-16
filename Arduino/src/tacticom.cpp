@@ -1,19 +1,30 @@
 #include "tacticom.h"
 
-Tacticom::Tacticom(const String &prefix, void (*commands_handler)(const String &name, const String &answer_code, const String &ask_code, const String *args, uint8_t args_count)) : prefix(prefix + "+"), commands_handler(commands_handler) {}
+TactiCom::TactiCom(const String &prefix,
+                   void (*commands_handler)(
+                       const String &name,
+                       const String &answer_code,
+                       const String &ask_code,
+                       const String *args,
+                       uint8_t args_count
+                   ))
+    : prefix(prefix + "+"),
+      commands_handler(commands_handler) {
+}
 
-void Tacticom::tick() {
-    if (Serial.available() <= 0) return; // No data available
+void TactiCom::tick() const {
+    if (Serial.available() <= 0) return; // No new command available
 
     String raw = Serial.readStringUntil('\n');
     raw.trim();
 
     if (!raw.startsWith(prefix)) return; // Not a valid command
 
+
+    // Parse the command
     unsigned int index = prefix.length();
 
     String command_answer_code;
-    String command_name;
     String command_ask_code;
     String command_args;
 
@@ -25,7 +36,11 @@ void Tacticom::tick() {
     int ask_code_index = raw.indexOf('[', index);
     int args_index = raw.indexOf('=', index);
 
-    command_name = raw.substring(index, ask_code_index != -1 ? ask_code_index : args_index != -1 ? args_index : raw.length());
+    String command_name = raw.substring(index, ask_code_index != -1
+                                                   ? ask_code_index
+                                                   : args_index != -1
+                                                         ? args_index
+                                                         : raw.length());
 
     if (ask_code_index != -1) {
         command_ask_code = raw.substring(ask_code_index + 1, args_index != -1 ? args_index - 1 : raw.length() - 1);
@@ -58,10 +73,12 @@ void Tacticom::tick() {
 
     args[current_index] = command_args.substring(last_index);
 
+    // Call the command handler
     commands_handler(command_name, command_answer_code, command_ask_code, args, args_count);
 }
 
-void Tacticom::send(const String &name, const String &answer_code, const String *args, uint8_t args_count) {
+void TactiCom::send(const String &name, const String &answer_code, const String &ask_code, const String *args,
+                    const uint8_t args_count) const {
     Serial.print(prefix);
     if (answer_code != "") {
         Serial.print('[');
@@ -69,6 +86,11 @@ void Tacticom::send(const String &name, const String &answer_code, const String 
         Serial.print(']');
     }
     Serial.print(name);
+    if (ask_code != "") {
+        Serial.print('[');
+        Serial.print(ask_code);
+        Serial.print(']');
+    }
     if (args_count > 0 && args != nullptr) {
         Serial.print('=');
         for (uint8_t i = 0; i < args_count; i++) {
@@ -79,18 +101,26 @@ void Tacticom::send(const String &name, const String &answer_code, const String 
     Serial.println();
 }
 
-void Tacticom::send_message(const String &name) {
-    send_message(name, nullptr, 0);
+void TactiCom::send_event(const String &name) const {
+    send_event(name, nullptr, 0);
 }
 
-void Tacticom::send_message(const String &name, const String *args, uint8_t args_count) {
-    send(name, "", args, args_count);
+void TactiCom::send_event(const String &name, const String *args, const uint8_t args_count) const {
+    send(name, "", "", args, args_count);
 }
 
-void Tacticom::answer_message(const String &name, const String &answer_code) {
-    answer_message(name, answer_code, nullptr, 0);
+void TactiCom::send_request(const String &name, const String &ask_code) const {
+    send_request(name, ask_code, nullptr, 0);
 }
 
-void Tacticom::answer_message(const String &name, const String &answer_code, const String *args, uint8_t args_count) {
-    send(name, answer_code, args, args_count);
+void TactiCom::send_request(const String &name, const String &ask_code, const String *args, const uint8_t args_count) const {
+    send(name, "", ask_code, args, args_count);
+}
+
+void TactiCom::send_reply(const String &name, const String &answer_code) const {
+    send_reply(name, answer_code, nullptr, 0);
+}
+
+void TactiCom::send_reply(const String &name, const String &answer_code, const String *args, const uint8_t args_count) const {
+    send(name, answer_code, "", args, args_count);
 }

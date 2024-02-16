@@ -161,8 +161,8 @@ class SerialTactiCom(TactiCom):
         from tacticom import TactiSerial
         self._ts = TactiSerial(port, baudrate, self._on_message, poll_sleep_time=poll_sleep_time)
 
-    def _send_message(self, message: str) -> None:
-        self._ts.send(message)
+    def _send_message(self, message: TactiMessage) -> None:
+        self._ts.send(str(message))
 
     def open(self) -> None:
         """Open the serial port"""
@@ -203,7 +203,7 @@ class SubprocessTactiCom(TactiCom):
         self._poll_message_thread.daemon = True
         self._poll_message_thread.start()
 
-    def _send_message(self, message: str) -> None:
+    def _send_message(self, message: TactiMessage) -> None:
         print(message, file=self.command_output)
 
     def _poll_message(self):

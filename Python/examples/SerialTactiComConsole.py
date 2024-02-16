@@ -13,8 +13,9 @@ def commands_handler(command: str, ask_code: str, reply_code: str, arguments: li
     print("Received command " + command + " with args: " + str(arguments))
 
 
-# Create a SerialTactiCom. Can be replaced by another TactiCom implementation
-stc = SerialTactiCom("R1", "COM4", 115200, commands_handler)
+# Create a SerialTactiCom. Can be replaced by another TactiCom implementation. Here we ignore invalid messages to allow
+# the arduino to send raw debug serial messages
+stc = SerialTactiCom("R1", "/dev/ttyACM0", 115200, commands_handler, on_invalid_message="ignore")
 stc.open()  # Open the serial port
 
 print("Connected to TactiCom device")
