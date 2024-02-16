@@ -1,30 +1,44 @@
+"""
+This example shows how to use the SerialTactiCom class to communicate with a TactiCom device using events and requests.
+"""
+
 import asyncio
 import time
 
 from tacticom import SerialTactiCom
-from tacticom.tacticoms import CommandRegister
 
 
 async def main():
-    cr = CommandRegister()
-    cr.register("divide_result", lambda ask_code, q, r: print("The result is: " + q + " r: " + r))
-
-    tacticom = SerialTactiCom("R1", "/dev/ttyUSB0", 115200, cr)
-    tacticom.open()
+    # Create a SerialTactiCom
+    stc = SerialTactiCom("R1", "/dev/ttyUSB0", 115200)
+    stc.open()  # Open the serial port
     print("Connected to TactiCom device")
+
     time.sleep(2)  # Let Arduino time to boot (Arduino resets on serial connection)
 
-    tacticom.send_message("led", "on")
-    print(await tacticom.ask_message("ping"))
-    result = await tacticom.ask_message("add", "1", "2")
-    print("The result is: " + result[1][0])
-    tacticom.send_message("divide", "11", "5")
-    tacticom.send_message("led", "off")
-    while True:
-        if input() == "exit":
-            break
+    # send an event
+    stc.send_event("led", "on")
 
-    tacticom.close()
+    # send a request
+    print(await stc.send_request("ping"))
+
+    # send a request
+    result_command, result_parameter = await stc.send_request("add", "1", "2")
+    print("The result is: " + result_parameter[0])
+
+    # send a request
+    result_command, result_parameter = await stc.send_request("divide", "11", "5")
+    if result_command == "divide_error":
+        print("Error: " + result_parameter[0])
+    else:
+        print("The result is: " + result_parameter[0] + " r: " + result_parameter[1])
+
+    stc.send_event("led", "off")
+
+    input("Press Enter to exit...")
+
+    # Close the communication port
+    stc.close()
 
 
 if __name__ == '__main__':
