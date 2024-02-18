@@ -13,7 +13,7 @@ pip install -e "git+https://github.com/TACTINSA/TACTICOM/#egg=tacticom&subdirect
 Multiple implementations of the TactiCom protocol are available:
 
 + Serial communication (e.g. with Arduino) -> `SerialTactiCom`
-+ Subprocess communication (e.g. with another Python process) -> `SubprocessTactiCom`
++ Subprocess communication (e.g. with another Python process) -> `TextIOTactiCom`
   You can also use the Tacticom protocol through your own implementation by using the `TactiCom` class.
 
 The following examples use the `SerialTactiCom` implementation, but code for the other implementations is similar (see
@@ -77,6 +77,7 @@ protocol isn't required.
 ## Examples
 
 + [Sample usage of SerialTactiCom](examples/SerialTactiComExample.py)
-+ [Sample usage of SubprocessTactiCom](examples/SubprocessTactiComExample.py)
++ [Sample usage of TextIOTactiCom for console communication](examples/TextIOTactiComExample.py)
++ [Sample usage of TextIOTactiCom for subprocess communication](examples/SubprocessTactiComExample.py)
 + [Console for playing with SerialTactiCom](examples/SerialTactiComConsole.py)
 + [Console for playing with TactiSerial (No TactiCom protocol)](examples/TactiSerialConsole.py)

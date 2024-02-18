@@ -1,5 +1,5 @@
 """
-This example demonstrates how to use SubprocessTactiCom to communicate with a child process.
+This example demonstrates how to use TextIOTactiCom to communicate with a child process.
 This is the child process. Please see SubprocessTactiComExample.py for the parent process.
 This script isn't intended to be run directly, but by the parent process.
 """
@@ -7,7 +7,7 @@ This script isn't intended to be run directly, but by the parent process.
 import os
 import sys
 
-from tacticom import SubprocessTactiCom
+from tacticom import TextIOTactiCom
 
 if __name__ == '__main__':
     # Get communication pipes from launch arguments
@@ -17,7 +17,7 @@ if __name__ == '__main__':
     outfile = os.fdopen(int(sys.argv[2]), 'w', buffering=1)
 
     # Open the communication through TacitCom
-    tc = SubprocessTactiCom("R1", infile, outfile)
+    tc = TextIOTactiCom("R1", infile, outfile)
 
     # Register commands
     tc.get_command_register().on_request("add", lambda a, b: ("result", str(int(a) + int(b))))

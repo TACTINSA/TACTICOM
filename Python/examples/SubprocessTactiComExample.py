@@ -1,12 +1,12 @@
 """
-This example demonstrates how to use SubprocessTactiCom to communicate with a child process.
+This example demonstrates how to use TextIOTactiCom to communicate with a child process.
 """
 
 import asyncio
 import os
 import subprocess
 
-from tacticom import SubprocessTactiCom
+from tacticom import TextIOTactiCom
 
 
 async def main():
@@ -20,8 +20,8 @@ async def main():
     outfile = os.fdopen(w1, 'w', buffering=1)
     infile = os.fdopen(r2)
 
-    # Create a SubprocessTactiCom
-    tc = SubprocessTactiCom("R1", infile, outfile)
+    # Create a TextIOTactiCom
+    tc = TextIOTactiCom("R1", infile, outfile)
 
     # Send a test command and print the result
     answer_command, answer_parameters = await tc.send_request("add", 1, "2")

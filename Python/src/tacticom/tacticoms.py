@@ -29,9 +29,9 @@ class CommandRegister:
         self.request_handlers[request] = handler
 
     def __call__(self, command: str, ask_code: str, answer_code: str, arguments: list):
-        if ask_code is not None and command in self.request_handlers:
+        if command in self.request_handlers:
             return self.request_handlers[command](*arguments)
-        elif ask_code is None and command in self.events_handlers:
+        elif command in self.events_handlers:
             self.events_handlers[command](*arguments)
             return None
         else:
@@ -86,7 +86,7 @@ class TactiCom(ABC):
             self._received_replies[message.answer_code] = message.command, message.arguments
         else:  # If the message is an event or a request
             result = self.commands_handler(message.command, message.ask_code, message.answer_code, message.arguments)
-            if message.ask_code is not None and result is not None:
+            if result is not None:
                 self.send_reply(message.ask_code, result[0], *result[1:])
 
     def send_event(self, message: str, *args) -> None:
@@ -173,8 +173,8 @@ class SerialTactiCom(TactiCom):
         self._ts.close()
 
 
-class SubprocessTactiCom(TactiCom):
-    """TactiCom implementation for subprocesses communication
+class TextIOTactiCom(TactiCom):
+    """TactiCom implementation for TextIO streams & subprocesses communication
 
     :param prefix: The prefix to use. Must be the same on each side.
     :param command_input: The input stream to use to read commands
