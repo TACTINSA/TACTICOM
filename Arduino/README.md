@@ -39,7 +39,7 @@ void setup() {
 
 // In loop function
 void loop() {
-    tacticom.tick(); // Periodicaly check for new received commands
+    tc.tick(); // Periodicaly check for new received commands
 }
 ```
 
