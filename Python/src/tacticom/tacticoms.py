@@ -93,7 +93,7 @@ class TactiCom(ABC):
         """Send an event to the other side, without waiting for a reply"""
         self._send_message(TactiMessage(self.prefix, None, message, None, list(args)))
 
-    async def send_request(self, message: str, *args, wait=True) -> tuple[str, list]:
+    def send_request(self, message: str, *args, wait=True) -> tuple[str, list]:
         """
         Send a reply request to the other side and wait for the reply (if wait is True).
 

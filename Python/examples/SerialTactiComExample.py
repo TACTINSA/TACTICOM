@@ -2,13 +2,12 @@
 This example shows how to use the SerialTactiCom class to communicate with a TactiCom device using events and requests.
 """
 
-import asyncio
 import time
 
 from tacticom import SerialTactiCom
 
 
-async def main():
+def main():
     # Create a SerialTactiCom
     stc = SerialTactiCom("R1", "/dev/ttyUSB0", 115200)
     stc.open()  # Open the serial port
@@ -20,14 +19,14 @@ async def main():
     stc.send_event("led", "on")
 
     # send a request
-    print(await stc.send_request("ping"))
+    print(stc.send_request("ping"))
 
     # send a request
-    result_command, result_parameter = await stc.send_request("add", "1", "2")
+    result_command, result_parameter = stc.send_request("add", "1", "2")
     print("The result is: " + result_parameter[0])
 
     # send a request
-    result_command, result_parameter = await stc.send_request("divide", "11", "5")
+    result_command, result_parameter = stc.send_request("divide", "11", "5")
     if result_command == "divide_error":
         print("Error: " + result_parameter[0])
     else:
@@ -42,4 +41,4 @@ async def main():
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    main()
