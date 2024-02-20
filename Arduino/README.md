@@ -21,7 +21,7 @@ In Arduino IDE, under `Sketch` -> `Include Library` -> `Add .ZIP Library...` sel
 1. Include the library
 ```cpp
 // Begining of the file
-#include "tacticom.h"
+#include <tacticom.h>
 ```
 2. Initialisation
 ```cpp
@@ -39,7 +39,7 @@ void setup() {
 
 // In loop function
 void loop() {
-    tacticom.tick(); // Periodicaly check for new received commands
+    tc.tick(); // Periodicaly check for new received commands
 }
 ```
 
